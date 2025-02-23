@@ -5,7 +5,7 @@
 import os
 
 API_HASH = os.environ.get("API_HASH", "")
-API_ID = os.environ.get("APP_ID", "")
+API_ID = os.environ.get("API_ID", "")
 BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "")
 
 # Validate API Credentials
