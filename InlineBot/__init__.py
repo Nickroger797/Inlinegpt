@@ -5,23 +5,43 @@
 import os
 
 API_HASH = os.environ.get("API_HASH", "")
-APP_ID = int(os.environ.get("APP_ID", ""))
-DB_URI = os.environ.get("DATABASE_URL", "")
+API_ID = os.environ.get("APP_ID", "")
 BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "")
-TG_BOT_WORKERS = int(os.environ.get("BOT_WORKERS", '4'))
-DB_NAME = os.environ.get("DATABASE_NAME", "InlineFilterBot")
-thumb = os.environ.get('THUMBNAIL_URL', 'https://telegra.ph/file/516ca261de9ebe7f4ffe1.jpg')
-OWNER_ID = int(os.environ.get('OWNER_ID'))
-CUSTOM_START_MESSAGE = os.environ.get('START_MESSAGE','')
-FILTER_COMMAND = os.environ.get('FILTER_COMMAND', 'add')
-DELETE_COMMAND = os.environ.get('DELETE_COMMAND', 'del')
-IS_PUBLIC = True if os.environ.get('IS_PUBLIC', 'True').lower() != 'false' else False
+
+# Validate API Credentials
+if not API_ID or not API_HASH or not BOT_TOKEN:
+    raise Exception("Missing API credentials! Ensure API_ID, API_HASH, and TG_BOT_TOKEN are set.")
+
+# Convert APP_ID to integer safely
 try:
-    ADMINS=[OWNER_ID]
-    for x in (os.environ.get("ADMINS", "").split()):
+    API_ID = int(API_ID)
+except ValueError:
+    raise Exception("Invalid APP_ID! It must be an integer.")
+
+DB_URI = os.environ.get("DATABASE_URL", "")
+TG_BOT_WORKERS = int(os.environ.get("BOT_WORKERS", "4"))
+DB_NAME = os.environ.get("DATABASE_NAME", "InlineFilterBot")
+thumb = os.environ.get("THUMBNAIL_URL", "https://telegra.ph/file/516ca261de9ebe74fffe1.jpg")
+OWNER_ID = os.environ.get("OWNER_ID", "")
+
+# Validate OWNER_ID
+try:
+    OWNER_ID = int(OWNER_ID)
+except ValueError:
+    raise Exception("Invalid OWNER_ID! It must be an integer.")
+
+CUSTOM_START_MESSAGE = os.environ.get("START_MESSAGE", "")
+FILTER_COMMAND = os.environ.get("FILTER_COMMAND", "add")
+DELETE_COMMAND = os.environ.get("DELETE_COMMAND", "del")
+IS_PUBLIC = True if os.environ.get("IS_PUBLIC", "True").lower() != "false" else False
+
+# Validate Admins
+try:
+    ADMINS = [OWNER_ID]
+    for x in os.environ.get("ADMINS", "").split():
         ADMINS.append(int(x))
 except ValueError:
-        raise Exception("Your Admins list does not contain valid integers.")
+    raise Exception("Your Admins list does not contain valid integers.")
 
 #---------- ---------- ---------- ----------
 
