@@ -76,7 +76,7 @@ class CodeXBotz(Client):
         super().__init__(
             "bot",
             api_hash=API_HASH,
-            api_id=APP_ID,
+            api_id=API_ID,
             plugins={
                 "root": "InlineBot/plugins"
             },
